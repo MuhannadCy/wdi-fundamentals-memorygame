@@ -1,18 +1,56 @@
-alert('Hello, friends.');
-var cards = ["queen", "queen", "king", "king"];
-var cardsInPlay = [];
-var cardOne = cards[0];
-cardsInPlay.push(cardOne);
-console.log(cardsInPlay[0]);
-console.log("User flipped queen");
-var cardTwo = cards[1];
-cardsInPlay.push(cardTwo);
-if(cardsInPlay.length === 2){
+const cards = [
+{
+	rank: 'queen',
+	suit: 'diamonds',
+	cardImage: 'images/queen-of-diamonds.png'
+},
+{
+	rank: 'queen',
+	suit: 'hearts',
+	cardImage: 'images/queen-of-hearts.png'
+},
+{
+	rank: 'king',
+	suit: 'diamonds',
+	cardImage: 'images/king-of-diamonds.png'
+},
+{
+	rank: 'king',
+	suit: 'hearts',
+	cardImage: 'images/king-of-hearts.png'
+}
+];
+const cardsInPlay = [];
+function checkForMatch(){
 	if(cardsInPlay[0] === cardsInPlay[1]){
-		alert("You found a match!");
+  		alert("You found a match!");
+	} 
+	else {
+	  	alert("Sorry, try again.");
 	}
-	else{
-		alert("Sorry try again");
+	/* Auto reload function
+	setTimeout(function(){
+    document.location.reload();
+	}, 500);
+	*/
+}
+function flipCard(){
+	var cardId = this.getAttribute('data-id');
+	cardsInPlay.push(cards[cardId].rank);
+	this.setAttribute('src', cards[cardId].cardImage);
+	if (cardsInPlay.length === 2){
+		checkForMatch();
 	}
 }
+function createBoard(){
+	for (var i = 0; i < cards.length; i++) {
+   		var cardElement = document.createElement('img');
+   		cardElement.setAttribute('src',  "images/back.png");
+   		cardElement.setAttribute('data-id', i);
+   		cardElement.addEventListener('click', flipCard);
+   		document.getElementById("game-board").appendChild(cardElement);
+	}
+}
+createBoard();
+
 
